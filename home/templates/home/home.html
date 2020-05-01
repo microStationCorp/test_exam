@@ -1,0 +1,32 @@
+{% extends 'home.html' %}
+
+{% block title}
+home page
+{% endblock title}
+
+{% block body %}
+<div class="container">
+    <div class="card">
+        <div class="card-body text-center">
+            <a href="#" class="btn btn-info" type="button" style="min-width: 120px;">Log in</a>
+            <a href="#" class="btn btn-info" type="button" style="min-width: 120px;">Register</a>
+        </div>
+    </div>
+    <div class="card mt-2">
+        <div class="card-title m-2">
+            <h5>
+                Latest Exams :
+            </h5>
+        </div>
+        <div>
+            {% for topic in topics %}
+            <ul>
+                <li>
+                    {{topic.topic_name}}...{{topic.dateOfUpload|date:"d/m/Y"}} <a href="#">click here</a>
+                </li>
+            </ul>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock body %}
