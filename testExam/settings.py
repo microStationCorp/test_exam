@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'register.apps.RegisterConfig',
     'login.apps.LoginConfig',
     'timeline.apps.TimelineConfig',
+    'paper.apps.PaperConfig'
 ]
 
 MIDDLEWARE = [

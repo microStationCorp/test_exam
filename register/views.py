@@ -21,6 +21,9 @@ def register(response):
             elif User.objects.filter(username=username).exists():
                 messages.warning(response, 'Username already exists')
                 return redirect('../register')
+            elif ' ' in username:
+                messages.warning(response, 'no blank space in username')
+                return redirect('../register')
             else:
                 user = User.objects.create_user(
                     username=username, password=pass1)

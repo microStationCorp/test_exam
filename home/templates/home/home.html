@@ -22,7 +22,7 @@ home page
             {% for topic in topics %}
             <ul>
                 <li>
-                    {{topic.topic_name}}...{{topic.dateOfUpload|date:"d/m/Y"}} <a href="#">click here</a>
+                    {{topic.topic_name}}...{{topic.dateOfUpload|date:"d/m/Y"}} <a href="../paper/{{topic.id}}">click here</a>
                 </li>
             </ul>
             {% endfor %}
