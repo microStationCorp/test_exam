@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+
+{% block title %}timeline{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <div class="card text-center">
+        {{user.username|capfirst}}
+    </div>
+    <div class="card mt-2">
+        <div class="card-title m-2">
+            <h5>
+                Latest Exams :
+            </h5>
+        </div>
+        <div>
+            {% for topic in topics %}
+            <ul>
+                <li>
+                    {{topic.topic_name}}... {{topic.dateOfUpload|date:"d/m/Y"}} <a href="#">click here</a>
+                </li>
+            </ul>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock body %}

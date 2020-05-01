@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'register.apps.RegisterConfig',
     'login.apps.LoginConfig',
+    'timeline.apps.TimelineConfig',
 ]
 
 MIDDLEWARE = [
