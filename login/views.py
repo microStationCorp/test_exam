@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import loginForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.contrib.auth.views import LoginView
 # Create your views here.
 
 
@@ -16,7 +17,10 @@ def mylogin(response):
             user = authenticate(response, username=username, password=password)
             if user is not None:
                 login(response, user)
-                return redirect('../timeline')
+                if 'next' in response.POST:
+                    return redirect(response.POST.get('next'))
+                else:
+                    return redirect('../timeline')
             else:
                 messages.warning(response, 'invalid Username or Password')
                 return redirect('../login')

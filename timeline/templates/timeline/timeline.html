@@ -8,6 +8,11 @@
         <h4>
             {{user.username|capfirst}}
         </h4>
+        <span>
+            <a href="../logout">
+                log out
+            </a>
+        </span>
     </div>
     <div class="card mt-2">
         <div class="card-title m-2">
@@ -19,8 +24,8 @@
             {% for topic in topics %}
             <ul>
                 <li>
-                    {{topic.topic_name}}... {{topic.dateOfUpload|date:"d/m/Y"}} <a href="../paper/{{topic.id}}">click
-                        here</a>
+                    {{topic.topic_name}}... {{topic.dateOfUpload|date:"d/m/Y"}} <a href="../paper/{{topic.id}}"
+                        target="_blank">click here</a>
                 </li>
             </ul>
             {% endfor %}

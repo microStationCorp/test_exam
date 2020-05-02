@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -23,3 +24,12 @@ class Questions(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class Marksheet(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    topic_id = models.IntegerField()
+    mark = models.IntegerField()
+    total_q = models.IntegerField()
+    right = models.IntegerField()
+    wrong = models.IntegerField()

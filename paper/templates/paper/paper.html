@@ -19,17 +19,39 @@
 <body>
 
     <div class="container">
-        <ol>
-            {% for q in que %}
-            <div class="card m-2">
-                <div class="card-body">
-                    <li>
-                        {{q.question}}
-                    </li>
+        <form action="../paper_submit/{{topic_id}}/" method="post">
+            {% csrf_token %}
+            <ol>
+                {% for q in que %}
+                <div>
+                    <div>
+                        <li>
+                            {{q.question}}
+                        </li>
+                        <ol>
+                            <li>
+                                <input type="radio" name="{{q.id}}" value="{{q.option1}}"><label
+                                    for="{{q.option1}}">{{q.option1}}</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="{{q.id}}" value="{{q.option2}}"><label
+                                    for="{{q.option2}}">{{q.option2}}</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="{{q.id}}" value="{{q.option3}}"><label
+                                    for="{{q.option3}}">{{q.option3}}</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="{{q.id}}" value="{{q.option4}}"><label
+                                    for="{{q.option4}}">{{q.option4}}</label>
+                            </li>
+                        </ol>
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
-        </ol>
+                {% endfor %}
+            </ol>
+            <input type="submit" value="Submit">
+        </form>
     </div>
 
 
