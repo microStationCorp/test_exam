@@ -21,12 +21,19 @@
             </h5>
         </div>
         <div>
-            {% for topic in topics %}
+            {% for d in data %}
             <ul>
+                {% if d.done %}
                 <li>
-                    {{topic.topic_name}}... {{topic.dateOfUpload|date:"d/m/Y"}} <a href="../paper/{{topic.id}}"
+                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <a
+                        href="../paper/paper_res/{{d.topic.id}}" target="_blank">result</a>
+                </li>
+                {% else %}
+                <li>
+                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <a href="../paper/{{d.topic.id}}"
                         target="_blank">click here</a>
                 </li>
+                {% endif %}
             </ul>
             {% endfor %}
         </div>

@@ -15,10 +15,12 @@ class QuestionAdmin(ModelAdmin):
 
 class MarkAdmin(ModelAdmin):
     list_display = [
+        "user",
         "topic_id",
         "mark",
         "right",
-        "wrong"
+        "wrong",
+        'passed'
     ]
 
 

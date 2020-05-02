@@ -28,8 +28,11 @@ class Questions(models.Model):
 
 class Marksheet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    topic_id = models.IntegerField()
-    mark = models.IntegerField()
-    total_q = models.IntegerField()
-    right = models.IntegerField()
-    wrong = models.IntegerField()
+    topic_id = models.IntegerField(default=0)
+    mark = models.IntegerField(default=0)
+    total_q = models.IntegerField(default=0)
+    right = models.IntegerField(default=0)
+    wrong = models.IntegerField(default=0)
+    notA = models.IntegerField(default=0)
+    percentage = models.IntegerField(default=0)
+    passed = models.BooleanField(default=False)

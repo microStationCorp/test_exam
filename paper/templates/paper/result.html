@@ -19,22 +19,11 @@
 <body>
 
     <div class="container">
-        <ol>
-            {% for r in ans %}
-            <li>
-                <span class="font-weight-bold">{{r.ques}}</span> <br>
-                <span>right answer : {{r.ans}}</span><br>
-                <span>user given : {{r.user}}</span><br>
-                {% if r.rem %}
-                <span class="text-success font-weight-bold">remark : Right </span>
-                {% elif r.rem is None %}
-                <span class="text-muted font-weight-bold">remark : not answered </span>
-                {% else %}
-                <span class="text-danger font-weight-bold">remark : Wrong </span>
-                {% endif %}
-            </li>
-            {% endfor %}
-        </ol>
+        <div class="text-center m-3">
+            <span class="text-success h3">
+                {{topic.topic_name | capfirst}}
+            </span>
+        </div>
 
         <div>
             <table class="table table-bordered">
@@ -54,10 +43,10 @@
                         <td>{{ res.right }}</td>
                         <td>{{ res.wrong }}</td>
                         <td>{{ res.notA }}</td>
-                        <td>{{ res.total }}</td>
+                        <td>{{ res.total_q }}</td>
                         <td>{{ res.mark }}</td>
-                        <td>{{ res.perc }}</td>
-                        <td>{{ res.rem }}</td>
+                        <td>{{ res.percentage }}</td>
+                        <td>{{ res.passed }}</td>
                     </tr>
                 </tbody>
             </table>

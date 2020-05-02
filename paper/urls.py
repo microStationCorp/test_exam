@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     path('<int:topic_id>/', views.qPaper, name='paper'),
     path('paper_submit/<int:topic_id>/', views.pSubmit, name="submit"),
+    path('paper_res/<int:topic_id>/', views.pResult, name="result"),
 ]
