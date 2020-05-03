@@ -53,9 +53,9 @@ def pSubmit(request, topic_id):
         else:
             result['rem'] = False
 
-        m = Marksheet(user=request.user, topic_id=topic_id, mark=result['mark'], total_q=result['total'],
-                      right=result['right'], wrong=result['wrong'], notA=result['notA'], percentage=result['perc'], passed=result['rem'])
-        m.save()
+        # m = Marksheet(user=request.user, topic_id=topic_id, mark=result['mark'], total_q=result['total'],
+        #               right=result['right'], wrong=result['wrong'], notA=result['notA'], percentage=result['perc'], passed=result['rem'])
+        # m.save()
 
         return render(request, 'paper/markSheet.html', {'ans': answer_sheet, 'res': result})
     else:

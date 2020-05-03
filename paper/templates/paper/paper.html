@@ -13,13 +13,30 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <title>question paper</title>
+    <style>
+        .timer {
+            background: rgb(203, 245, 245);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
+        .timer span {
+            font-family: 'Nova Square', cursive;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #014141;
+        }
+    </style>
 
 </head>
 
 <body>
 
     <div class="container">
-        <form action="../paper_submit/{{topic_id}}/" method="post">
+        <form id="myForm" action="../paper_submit/{{topic_id}}/" method="post">
             {% csrf_token %}
             <ol>
                 {% for q in que %}
@@ -54,8 +71,33 @@
         </form>
     </div>
 
+    <div class="timer">
+        <span>Timer : <span id="min">0m</span> : <span id="sec">0s</span></span>
+    </div>
+
 
     <!-- Optional JavaScript -->
+    <script>
+        var totalTime = 10;
+        var currTime = 0;
+        var min = 0;
+        var sec = 0;
+
+        function timer() {
+            if (totalTime - currTime > 0) {
+                min = parseInt((totalTime - currTime) / 60);
+                sec = (totalTime - currTime) % 60;
+
+                document.getElementById('min').innerText = min;
+                document.getElementById('sec').innerText = sec;
+                currTime++;
+                setTimeout(timer, 1000);
+            } else {
+                document.getElementById('myForm').submit();
+            }
+        }
+        timer();
+    </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
