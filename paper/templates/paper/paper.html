@@ -29,11 +29,26 @@
             font-weight: bold;
             color: #014141;
         }
+
+        .submit_but {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background-color: rgb(96, 252, 122);
+            color: rgb(3, 48, 49);
+        }
     </style>
 
 </head>
 
 <body>
+    <div class="text-center">
+        <h3 class="font-weight-bold text-primary">
+            {{t.topic_name|capfirst}}
+        </h3>
+    </div>
 
     <div class="container">
         <form id="myForm" action="../paper_submit/{{topic_id}}/" method="post">
@@ -45,7 +60,7 @@
                         <li>
                             {{q.question}}
                         </li>
-                        <ol>
+                        <ol type="a">
                             <li>
                                 <input type="radio" name="{{q.id}}" value="{{q.option1}}"><label
                                     for="{{q.option1}}">{{q.option1}}</label>
@@ -67,7 +82,7 @@
                 </div>
                 {% endfor %}
             </ol>
-            <input type="submit" value="Submit">
+            <input class="submit_but" type="submit" value="Submit">
         </form>
     </div>
 
@@ -77,8 +92,8 @@
 
 
     <!-- Optional JavaScript -->
-    <script>
-        var totalTime = 10;
+    <script type="text/javascript">
+        var totalTime = {{ t.tTime }};
         var currTime = 0;
         var min = 0;
         var sec = 0;

@@ -24,6 +24,13 @@ class MarkAdmin(ModelAdmin):
     ]
 
 
-admin.site.register(Topic)
+class TopicAdmin(ModelAdmin):
+    list_display = [
+        "topic_name",
+        "published"
+    ]
+
+
+admin.site.register(Topic,TopicAdmin)
 admin.site.register(Questions, QuestionAdmin)
 admin.site.register(Marksheet, MarkAdmin)

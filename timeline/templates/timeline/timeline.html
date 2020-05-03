@@ -23,7 +23,12 @@
         <div>
             {% for d in data %}
             <ul>
-                {% if d.done %}
+                {% if not d.topic.published %}
+                <li>
+                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <span class="bg-danger rounded text-light">coming
+                        soon</span>
+                </li>
+                {% elif d.done %}
                 <li>
                     {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <a
                         href="../paper/paper_res/{{d.topic.id}}" target="_blank">result</a>

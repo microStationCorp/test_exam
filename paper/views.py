@@ -11,8 +11,12 @@ def qPaper(request, topic_id):
     elif len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) != 0:
         return redirect("%s/timeline" % (settings.MAIN_URL))
     else:
+        t = Topic.objects.get(id=topic_id)
         que = Questions.objects.filter(topic__id=topic_id)
-        return render(request, 'paper/paper.html', {'que': que, 'topic_id': topic_id})
+        if t.tTime == 0:
+            t.tTime = len(que)*15
+            t.save()
+        return render(request, 'paper/paper.html', {'que': que, 'topic_id': topic_id, 't': t})
 
 
 def pSubmit(request, topic_id):
