@@ -5,6 +5,24 @@ from django.conf import settings
 # Create your views here.
 
 
+def pDesc(request, topic_id):
+    t = Topic.objects.get(id=topic_id)
+    que = Questions.objects.filter(topic__id=topic_id)
+
+    context = {
+        "topic": t,
+        "noq": len(que)
+    }
+
+    if t.tTime == 0:
+        t.tTime = len(que)*25
+        t.save()
+    context['min'] = t.tTime//60
+    context['sec'] = t.tTime % 60
+
+    return render(request, 'paper/desc.html', context)
+
+
 def qPaper(request, topic_id):
     if not request.user.is_authenticated:
         return redirect("%s?next=%s" % (settings.LOGIN_URL, request.path))
@@ -26,6 +44,7 @@ def pSubmit(request, topic_id):
         notA = 0
         wrong = 0
         que = Questions.objects.filter(topic__id=topic_id)
+        t = Topic.objects.get(id=topic_id)
         for i in range(len(que)):
             if request.POST.get(str(que[i].id)) == que[i].answer:
                 res = True
@@ -61,7 +80,7 @@ def pSubmit(request, topic_id):
         #               right=result['right'], wrong=result['wrong'], notA=result['notA'], percentage=result['perc'], passed=result['rem'])
         # m.save()
 
-        return render(request, 'paper/markSheet.html', {'ans': answer_sheet, 'res': result})
+        return render(request, 'paper/markSheet.html', {'ans': answer_sheet, 'res': result, 'tname': t.topic_name})
     else:
         return redirect("%s/timeline" % (settings.MAIN_URL))
 

@@ -1,0 +1,50 @@
+{% extends 'home.html' %}
+
+{% block title %}Description{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <h3 class="text-center text-primary">
+        Description
+    </h3>
+    <div class="card">
+        <div class="card-body">
+            <ol>
+                <li>
+                    The exam , you are going to appear is on the basis of <b
+                        class="text-capitalize text-success">{{topic.topic_name}}</b> topic.
+                </li>
+                <li>
+                    you have total <b class="text-success">{{min}} min {{sec}} sec</b>.
+                </li>
+                <li>
+                    We are providing a timer on your question paper and there is a <b class="text-success">submit</b>
+                    button also for submit
+                    paper anytime.
+                </li>
+                <li>
+                    you have only <b class="text-success">one chance</b> to give the exam. If you submit the paper , you
+                    will never able to re-exam
+                    on the set.
+                </li>
+                <li>
+                    there are total <b class="text-success">{{noq}}</b> number/numbers of question(s). All have <b
+                        class="text-success">4</b> options among them one is
+                    correct.
+                </li>
+                <li>
+                    All question have <b class="text-success">1</b> mark each. For giving wrong answer <b
+                        class="text-success">0.25</b> mark will be deducted.
+                </li>
+                <li>
+                    After complete time , form will automatically be submitted and redirected to a page where you will
+                    find your answer sheet and marks.
+                </li>
+            </ol>
+            <div class="text-center">
+                <a class="btn btn-primary" href="http://127.0.0.1:8000/paper/{{topic.id}}">START EXAM</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

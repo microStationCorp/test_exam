@@ -25,7 +25,8 @@
             <ul>
                 {% if not d.topic.published %}
                 <li>
-                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <span class="bg-danger rounded text-light">coming
+                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <span
+                        class="bg-danger rounded text-light">coming
                         soon</span>
                 </li>
                 {% elif d.done %}
@@ -35,8 +36,8 @@
                 </li>
                 {% else %}
                 <li>
-                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <a href="../paper/{{d.topic.id}}"
-                        target="_blank">click here</a>
+                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <a
+                        href="../paper/description/{{d.topic.id}}" target="_blank">click here</a>
                 </li>
                 {% endif %}
             </ul>
