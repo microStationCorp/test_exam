@@ -6,21 +6,27 @@ from django.conf import settings
 
 
 def pDesc(request, topic_id):
-    t = Topic.objects.get(id=topic_id)
-    que = Questions.objects.filter(topic__id=topic_id)
+    if not request.user.is_authenticated:
+        return redirect("%s?next=%s" % (settings.LOGIN_URL, f"/paper/description/{topic_id}/"))
+    elif len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) == 0:
+        t = Topic.objects.get(id=topic_id)
+        que = Questions.objects.filter(topic__id=topic_id)
 
-    context = {
-        "topic": t,
-        "noq": len(que)
-    }
+        context = {
+            "topic": t,
+            "noq": len(que)
+        }
 
-    if t.tTime == 0:
-        t.tTime = len(que)*25
-        t.save()
-    context['min'] = t.tTime//60
-    context['sec'] = t.tTime % 60
+        if t.tTime == 0:
+            t.tTime = len(que)*25
+            t.save()
+        context['min'] = t.tTime//60
+        context['sec'] = t.tTime % 60
 
-    return render(request, 'paper/desc.html', context)
+        return render(request, 'paper/desc.html', context)
+    else:
+        t = Topic.objects.get(id=topic_id)
+        return render(request, 'paper/desc_1.html', {'topic': t})
 
 
 def qPaper(request, topic_id):

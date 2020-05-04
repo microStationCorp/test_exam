@@ -9,7 +9,7 @@ home page
     <div class="card">
         <div class="card-body text-center">
             <a href="../login" class="btn btn-info" type="button" style="min-width: 120px;">Log in</a>
-            <a href="../register" class="btn btn-info" type="button" style="min-width: 120px;">Register</a>
+            <a href="../register" class="btn btn-info" type="button" style="min-width: 120px;">Create an Account</a>
         </div>
     </div>
     <div class="card mt-2">
@@ -21,9 +21,18 @@ home page
         <div>
             {% for topic in topics %}
             <ul>
+                {% if not topic.published %}
                 <li>
-                    {{topic.topic_name}}...{{topic.dateOfUpload|date:"d/m/Y"}} <a href="../paper/{{topic.id}}" target="_blank">click here</a>
+                    {{topic.topic_name}}... {{topic.dateOfUpload|date:"d/m/Y"}} <span
+                        class="bg-danger rounded text-light">coming
+                        soon</span>
                 </li>
+                {% else %}
+                <li>
+                    {{topic.topic_name}}... {{topic.dateOfUpload|date:"d/m/Y"}} <a
+                        href="../login/?next=/paper/description/{{topic.id}}">click here</a>
+                </li>
+                {% endif %}
             </ul>
             {% endfor %}
         </div>

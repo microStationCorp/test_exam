@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+
+{% block title %}Description{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <h3 class="text-center text-primary">
+        Description
+    </h3>
+    <div class="card">
+        <div class="card-body">
+            <ol>
+                <li>
+                    you have already appeared in this exam. So you are unable to give this exam once again.
+                </li>
+                <li>
+                    <a href="http://127.0.0.1:8000/paper/paper_res/{{topic.id}}" target="blank_">click here</a> to view your result on
+                    <b class="text-capitalize text-success">{{topic.topic_name}}</b> topic.
+                </li>
+            </ol>
+            <div class="text-center">
+                <a class="btn btn-primary" href="http://127.0.0.1:8000/timeline/">Go back to Timeline</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
