@@ -37,7 +37,6 @@ def qPaper(request, topic_id):
     else:
         t = Topic.objects.get(id=topic_id)
         que = Questions.objects.filter(topic__id=topic_id)
-        print(len(que)*15)
         if t.tTime != len(que)*t.tpq:
             t.tTime = len(que)*t.tpq
             t.save()
