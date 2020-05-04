@@ -15,13 +15,19 @@ class QuestionAdmin(ModelAdmin):
 
 class MarkAdmin(ModelAdmin):
     list_display = [
-        "user",
+        "get_user",
         "topic_id",
         "mark",
         "right",
         "wrong",
-        'passed'
+        'passed',
     ]
+    search_fields = ["user__username"]
+
+    def get_user(self, obj):
+        return obj.user.username
+
+    get_user.admin_order_field = 'user__username'
 
 
 class TopicAdmin(ModelAdmin):
@@ -29,9 +35,10 @@ class TopicAdmin(ModelAdmin):
         "topic_name",
         "tpq",
         "published",
+        "tTime"
     ]
 
 
-admin.site.register(Topic,TopicAdmin)
+admin.site.register(Topic, TopicAdmin)
 admin.site.register(Questions, QuestionAdmin)
 admin.site.register(Marksheet, MarkAdmin)

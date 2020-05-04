@@ -86,13 +86,25 @@ def pSubmit(request, topic_id):
                       right=result['right'], wrong=result['wrong'], notA=result['notA'], percentage=result['perc'], passed=result['rem'])
         m.save()
 
-        return render(request, 'paper/markSheet.html', {'ans': answer_sheet, 'res': result, 'tname': t.topic_name})
+        total = len(Marksheet.objects.filter(topic_id=topic_id))
+        rank = list(Marksheet.objects.filter(topic_id=topic_id).order_by(
+            "-percentage").values_list('user__id', flat=True)).index(request.user.id)+1
+
+        return render(request, 'paper/markSheet.html', {'ans': answer_sheet, 'res': result, 'tname': t.topic_name, 'total': total, 'rank': rank})
     else:
         return redirect("%s/timeline" % (settings.MAIN_URL))
 
 
 def pResult(request, topic_id):
-    ms = Marksheet.objects.get(user=request.user, topic_id=topic_id)
-    t = Topic.objects.get(id=topic_id)
-    ques = Questions.objects.filter(topic__id=topic_id)
-    return render(request, 'paper/result.html', {'res': ms, 'topic': t, 'questions': ques})
+    if not request.user.is_authenticated:
+        return redirect("%s?next=%s" % (settings.LOGIN_URL, f"/paper/paper_res/{topic_id}/"))
+    elif len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) == 0:
+        return redirect("%s/timeline" % (settings.MAIN_URL))
+    else:
+        ms = Marksheet.objects.get(user=request.user, topic_id=topic_id)
+        t = Topic.objects.get(id=topic_id)
+        ques = Questions.objects.filter(topic__id=topic_id)
+        total = len(Marksheet.objects.filter(topic_id=topic_id))
+        rank = list(Marksheet.objects.filter(topic_id=topic_id).order_by(
+            "-percentage").values_list('user__id', flat=True)).index(request.user.id)+1
+        return render(request, 'paper/result.html', {'res': ms, 'topic': t, 'questions': ques, 'total': total, 'rank': rank})
