@@ -27,7 +27,8 @@ class MarkAdmin(ModelAdmin):
 class TopicAdmin(ModelAdmin):
     list_display = [
         "topic_name",
-        "published"
+        "tpq",
+        "published",
     ]
 
 

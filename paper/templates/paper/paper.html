@@ -21,34 +21,29 @@
     <style>
         .timer {
             background: rgb(203, 245, 245);
-            position: absolute;
+            position: sticky;
             top: 10px;
             right: 20px;
             padding: 5px 10px;
             border-radius: 10px;
+            margin-bottom: 10px;
         }
 
         .timer span {
             font-family: 'Nova Square', cursive;
-            font-size: 2rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: #014141;
-        }
-
-        .submit_but {
-            position: absolute;
-            top: 80px;
-            right: 20px;
-            padding: 5px 10px;
-            border-radius: 10px;
-            background-color: rgb(96, 252, 122);
-            color: rgb(3, 48, 49);
         }
     </style>
 
 </head>
 
 <body>
+    <div class="timer">
+        <span>Timer : <span id="min">0m</span> : <span id="sec">0s</span></span>
+        <input class="btn-success rounded text-light ml-4" type="button" value="Submit">
+    </div>
     <div class="text-center">
         <h3 class="font-weight-bold text-primary">
             {{t.topic_name|capfirst}}
@@ -87,18 +82,15 @@
                     </div>
                 </div>
                 {% endfor %}
-                <input class="submit_but" type="submit" value="Submit">
             </ol>
         </form>
     </div>
 
-    <div class="timer">
-        <span>Timer : <span id="min">0m</span> : <span id="sec">0s</span></span>
-    </div>
+
 
 
     <!-- Optional JavaScript -->
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
         var totalTime = {{ t.tTime }};
         var currTime = 0;
         var min = 0;
@@ -118,7 +110,7 @@
             }
         }
         timer();
-    </script> -->
+    </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -145,7 +137,11 @@
                     }
                 })
             })
-        })
+
+            $("input[value=Submit]").on("click", function () {
+                document.getElementById('myForm').submit();
+            })
+        });
     </script>
 </body>
 

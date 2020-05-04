@@ -32,12 +32,12 @@
                 {% elif d.done %}
                 <li>
                     {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <a
-                        href="../paper/paper_res/{{d.topic.id}}" target="_blank">result</a>
+                        href="../paper/paper_res/{{d.topic.id}}">result</a>
                 </li>
                 {% else %}
                 <li>
                     {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <a
-                        href="../paper/description/{{d.topic.id}}" target="_blank">click here</a>
+                        href="../paper/description/{{d.topic.id}}">click here</a>
                 </li>
                 {% endif %}
             </ul>

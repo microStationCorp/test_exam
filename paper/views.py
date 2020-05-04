@@ -17,8 +17,8 @@ def pDesc(request, topic_id):
             "noq": len(que)
         }
 
-        if t.tTime == 0:
-            t.tTime = len(que)*25
+        if t.tTime != len(que)*t.tpq:
+            t.tTime = len(que)*t.tpq
             t.save()
         context['min'] = t.tTime//60
         context['sec'] = t.tTime % 60
@@ -37,8 +37,9 @@ def qPaper(request, topic_id):
     else:
         t = Topic.objects.get(id=topic_id)
         que = Questions.objects.filter(topic__id=topic_id)
-        if t.tTime == 0:
-            t.tTime = len(que)*15
+        print(len(que)*15)
+        if t.tTime != len(que)*t.tpq:
+            t.tTime = len(que)*t.tpq
             t.save()
         return render(request, 'paper/paper.html', {'que': que, 'topic_id': topic_id, 't': t})
 
@@ -82,9 +83,9 @@ def pSubmit(request, topic_id):
         else:
             result['rem'] = False
 
-        # m = Marksheet(user=request.user, topic_id=topic_id, mark=result['mark'], total_q=result['total'],
-        #               right=result['right'], wrong=result['wrong'], notA=result['notA'], percentage=result['perc'], passed=result['rem'])
-        # m.save()
+        m = Marksheet(user=request.user, topic_id=topic_id, mark=result['mark'], total_q=result['total'],
+                      right=result['right'], wrong=result['wrong'], notA=result['notA'], percentage=result['perc'], passed=result['rem'])
+        m.save()
 
         return render(request, 'paper/markSheet.html', {'ans': answer_sheet, 'res': result, 'tname': t.topic_name})
     else:
@@ -94,4 +95,5 @@ def pSubmit(request, topic_id):
 def pResult(request, topic_id):
     ms = Marksheet.objects.get(user=request.user, topic_id=topic_id)
     t = Topic.objects.get(id=topic_id)
-    return render(request, 'paper/result.html', {'res': ms, 'topic': t})
+    ques = Questions.objects.filter(topic__id=topic_id)
+    return render(request, 'paper/result.html', {'res': ms, 'topic': t, 'questions': ques})
