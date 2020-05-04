@@ -1,0 +1,50 @@
+{% extends 'home.html' %}
+
+{% block title}
+home page
+{% endblock title}
+
+{% block body %}
+<div class="container">
+    <div class="card text-center">
+        <h4>
+            {{user.username|capfirst}}
+        </h4>
+        <span>
+            <a href="../timeline">
+                Timeline
+            </a>
+        </span>
+        <span>
+            <a href="../logout">
+                log out
+            </a>
+        </span>
+    </div>
+
+    <div class="my-3">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">topic</th>
+                    <th scope="col">percentage</th>
+                    <th scope="col">rank</th>
+                    <th scope="col">topper</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in top %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{t.name}}</td>
+                    <td>{{t.perc}}</td>
+                    <td>{{t.rank}}/{{t.total}}</td>
+                    <td class="text-success">{{t.topper}}({{t.tper}}%)</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock body %}

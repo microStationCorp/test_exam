@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'register.apps.RegisterConfig',
     'login.apps.LoginConfig',
     'timeline.apps.TimelineConfig',
-    'paper.apps.PaperConfig'
+    'paper.apps.PaperConfig',
+    'myProfile.apps.MyprofileConfig'
 ]
 
 MIDDLEWARE = [
@@ -130,5 +131,5 @@ STATICFILES_DIRS = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_URL="http://127.0.0.1:8000/login/"
-MAIN_URL="http://127.0.0.1:8000"
+LOGIN_URL = "http://127.0.0.1:8000/login/"
+MAIN_URL = "http://127.0.0.1:8000"
