@@ -35,6 +35,17 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        .dev {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .dev a {
+            color: white;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -44,6 +55,46 @@
             ExamPre
         </a>
     </h1>
+    <div class="dev">
+        <button class="btn-dark text-light rounded" data-toggle="modal" data-target="#exampleModal">Developer</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Developer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span class="h5">
+                        Sujan Mondal
+                    </span><br>
+                    <span>
+                        Diplpoma in Electrical Engineering
+                    </span><br>
+                    <span>
+                        CEO, Founder of microStationCorp
+                    </span>
+                </div>
+                <div class="modal-body">
+                    <span class="h5">
+                        About
+                    </span><br>
+                    <span>
+                        version_1.0.0
+                    </span><br>
+                    <span>
+                        It is for those who want to prepare themselve for competetive exams. Here they can give exams for specified topic and check there performance compare to others
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {% block body %}
     {% endblock body %}
