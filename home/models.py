@@ -19,11 +19,11 @@ class Topic(models.Model):
 class Questions(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     question = models.TextField()
-    option1 = models.CharField(max_length=30)
-    option2 = models.CharField(max_length=30)
-    option3 = models.CharField(max_length=30)
-    option4 = models.CharField(max_length=30)
-    answer = models.CharField(max_length=30)
+    option1 = models.CharField(max_length=100)
+    option2 = models.CharField(max_length=100)
+    option3 = models.CharField(max_length=100)
+    option4 = models.CharField(max_length=100)
+    answer = models.CharField(max_length=100)
 
     def __str__(self):
         return self.question
@@ -32,10 +32,10 @@ class Questions(models.Model):
 class Marksheet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     topic_id = models.IntegerField(default=0)
-    mark = models.IntegerField(default=0)
+    mark = models.FloatField(default=0)
     total_q = models.IntegerField(default=0)
     right = models.IntegerField(default=0)
     wrong = models.IntegerField(default=0)
     notA = models.IntegerField(default=0)
-    percentage = models.IntegerField(default=0)
+    percentage = models.FloatField(default=0)
     passed = models.BooleanField(default=False)

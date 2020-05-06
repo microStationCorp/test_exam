@@ -4,6 +4,15 @@
 home page
 {% endblock title}
 
+{% block infoStyle %}
+<style>
+    .info-text {
+        color: red;
+        font-size: .7rem;
+    }
+</style>
+{% endblock infoStyle %}
+
 {% block body %}
 <div class="container">
     <div class="card">
@@ -15,7 +24,7 @@ home page
     <div class="card mt-2">
         <div class="card-title m-2">
             <h5>
-                Latest Exams :
+                Latest Exams : <span class="info-text font-weight-light">* question papers are uploaded everyday after 6pm.</span>
             </h5>
         </div>
         <div>

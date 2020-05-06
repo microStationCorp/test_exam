@@ -73,8 +73,8 @@ def pSubmit(request, topic_id):
             'wrong': wrong,
             'notA': notA,
             'total': len(que),
-            'mark': (right-wrong*0.25),
-            'perc': ((right-wrong*0.25)/len(que))*100,
+            'mark': float(right-wrong*0.25),
+            'perc': float((right-wrong*0.25)/len(que))*100,
         }
 
         if result['perc'] >= 40:
