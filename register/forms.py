@@ -19,8 +19,8 @@ class registerForm(forms.Form):
             # ),
             'username',
             Row(
-                Column('password1', css_class='form-group col-md-6 mb-0'),
-                Column('password2', css_class='form-group col-md-6 mb-0'),
+                Column('password1', css_class='small form-group col-md-6 mb-0'),
+                Column('password2', css_class='small form-group col-md-6 mb-0'),
                 css_class='form-row'
             ),
             Submit('submit', 'Register')
