@@ -29,6 +29,7 @@ home page
                     <th scope="col">#</th>
                     <th scope="col">topic</th>
                     <th scope="col">percentage</th>
+                    <th scope="col">Remark</th>
                     <th scope="col">rank</th>
                     <th scope="col">topper</th>
                 </tr>
@@ -39,6 +40,11 @@ home page
                     <th scope="row">{{forloop.counter}}</th>
                     <td>{{t.name}}</td>
                     <td>{{t.perc}}</td>
+                    {% if t.rem %}
+                    <td class="text-success">Passed</td>
+                    {% else %}
+                    <td class="text-danger">Failed</td>
+                    {% endif %}
                     <td>{{t.rank}}/{{t.total}}</td>
                     <td class="text-success">{{t.topper}}({{t.tper}}%)</td>
                 </tr>

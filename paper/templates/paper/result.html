@@ -53,7 +53,7 @@
                         <th scope="col">total</th>
                         <th scope="col">mark</th>
                         <th scope="col">percentage</th>
-                        <th scope="col">passed</th>
+                        <th scope="col">Remark</th>
                         <th scope="col">rank</th>
                     </tr>
                 </thead>
@@ -65,7 +65,11 @@
                         <td>{{ res.total_q }}</td>
                         <td>{{ res.mark }}</td>
                         <td>{{ res.percentage }}</td>
-                        <td>{{ res.passed }}</td>
+                        {% if res.passed %}
+                        <td class="text-success">Passed</td>
+                        {% else %}
+                        <td class="text-danger">Failed</td>
+                        {% endif %}
                         <td>{{ rank }}/{{total}}</td>
                     </tr>
                 </tbody>

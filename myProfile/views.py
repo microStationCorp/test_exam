@@ -15,6 +15,7 @@ def mypfl(request):
             top.append({
                 'name': Topic.objects.get(id=m.topic_id).topic_name,
                 'perc': m.percentage,
+                'rem': m.passed,
                 'rank': list(Marksheet.objects.filter(topic_id=m.topic_id).order_by("-percentage").values_list('user__id', flat=True)).index(request.user.id)+1,
                 'total': len(Marksheet.objects.filter(topic_id=m.topic_id)),
                 'topper': Marksheet.objects.filter(topic_id=m.topic_id).order_by("-percentage").first().user.username,
