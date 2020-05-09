@@ -26,5 +26,6 @@ urlpatterns = [
     path('timeline/', include('timeline.urls')),
     path('paper/', include('paper.urls')),
     path('logout/', views_logout.myLogout, name='logout'),
-    path('myprofile/', include('myProfile.urls'))
+    path('myprofile/', include('myProfile.urls')),
+    path('latest/', include('lExam.urls'))
 ]

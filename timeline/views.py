@@ -6,7 +6,7 @@ from home.models import Topic, Marksheet
 
 @login_required(login_url='../login')
 def timeline(response):
-    topics = Topic.objects.all().order_by('-dateOfUpload')
+    topics = Topic.objects.all().order_by('-dateOfUpload')[:5]
     data = []
     for t in topics:
         if len(Marksheet.objects.filter(user=response.user, topic_id=t.id)) == 0:
@@ -20,4 +20,9 @@ def timeline(response):
                 'done': True,
             })
 
-    return render(response, 'timeline/timeline.html', {'data': data})
+    if len(Topic.objects.all().order_by('-dateOfUpload')) > 5:
+        latest = True
+    else:
+        latest = False
+
+    return render(response, 'timeline/timeline.html', {'data': data, 'latest': latest})
