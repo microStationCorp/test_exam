@@ -9,7 +9,7 @@ class Topic(models.Model):
     topic_name = models.CharField(max_length=30)
     dateOfUpload = models.DateTimeField(default=timezone.now)
     tTime = models.IntegerField(default=0)
-    tpq=models.IntegerField(default=15)
+    tpq = models.IntegerField(default=15)
     published = models.BooleanField(default=False)
 
     def __str__(self):
@@ -39,3 +39,16 @@ class Marksheet(models.Model):
     notA = models.IntegerField(default=0)
     percentage = models.FloatField(default=0)
     passed = models.BooleanField(default=False)
+
+
+class Objection(models.Model):
+    user_id = models.IntegerField()
+    ques_id = models.IntegerField()
+    user_ans = models.CharField(max_length=100, null=True)
+    right_ans = models.CharField(max_length=100, null=True)
+    dateOfReport = models.DateTimeField(default=timezone.now)
+
+
+class Reply(models.Model):
+    ques_id = models.IntegerField()
+    reply = models.TextField(null=True, blank=True)

@@ -27,5 +27,6 @@ urlpatterns = [
     path('paper/', include('paper.urls')),
     path('logout/', views_logout.myLogout, name='logout'),
     path('myprofile/', include('myProfile.urls')),
-    path('latest/', include('lExam.urls'))
+    path('latest/', include('lExam.urls')),
+    path('objections/', include('objections.urls'))
 ]

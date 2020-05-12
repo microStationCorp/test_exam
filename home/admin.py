@@ -1,8 +1,32 @@
 from django.contrib import admin
-from .models import Topic, Questions, Marksheet
+from .models import Topic, Questions, Marksheet, Objection, Reply
 from django.contrib.admin.options import ModelAdmin
 
 # Register your models here.
+
+
+class ObjAdmin(ModelAdmin):
+    list_display = [
+        "user_id",
+        "ques_id",
+        "ques",
+        "user_ans",
+        "right_ans",
+        "dateOfReport"
+    ]
+
+    def ques(self, obj):
+        return Questions.objects.get(id=obj.ques_id).question
+
+
+class ReplyAdmin(ModelAdmin):
+    list_display = [
+        "ques",
+        "reply"
+    ]
+
+    def ques(self, obj):
+        return Questions.objects.get(id=obj.ques_id).question
 
 
 class QuestionAdmin(ModelAdmin):
@@ -42,3 +66,5 @@ class TopicAdmin(ModelAdmin):
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Questions, QuestionAdmin)
 admin.site.register(Marksheet, MarkAdmin)
+admin.site.register(Objection, ObjAdmin)
+admin.site.register(Reply, ReplyAdmin)
