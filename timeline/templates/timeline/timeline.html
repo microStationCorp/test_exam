@@ -41,7 +41,7 @@
                 {% if not d.topic.published %}
                 <li>
                     {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <span
-                        class="bg-danger rounded text-light">coming
+                        class="badge badge-danger">coming
                         soon</span>
                 </li>
                 {% elif d.done %}
