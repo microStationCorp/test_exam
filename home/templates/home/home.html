@@ -10,6 +10,31 @@ home page
         color: red;
         font-size: .7rem;
     }
+
+    .l-exam-list {
+        font-size: .9rem;
+    }
+
+    .l-exam-list a {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .s-list {
+        font-size: .9rem;
+    }
+
+    .s-list .badge {
+        background-color: rgb(240, 57, 133);
+        border-radius: 5px;
+    }
+
+    .s-list a {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+    }
 </style>
 {% endblock infoStyle %}
 
@@ -21,30 +46,81 @@ home page
             <a href="../register" class="btn btn-info" type="button" style="min-width: 120px;">Create an Account</a>
         </div>
     </div>
-    <div class="card mt-2">
-        <div class="card-title m-2">
-            <h5>
-                Latest Exams : <span class="info-text font-weight-light">* question papers are uploaded everyday after 6pm.</span>
-            </h5>
-        </div>
-        <div>
-            {% for topic in topics %}
-            <ul>
+
+    <div class="row mx-auto justify-content-between mt-2">
+
+        <!-- latest exam -->
+        <div class="col-12 col-sm-6 card" style="max-height: 300px;">
+            <div class="card-title m-2">
+                <h5>
+                    Latest Exams : <span class="info-text font-weight-light">* question papers are uploaded everyday
+                        after 6pm.</span>
+                </h5>
+            </div>
+            <ul class="overflow-auto mb-2 list-group l-exam-list">
+                {% for topic in topics %}
                 {% if not topic.published %}
-                <li>
-                    {{topic.topic_name}}... {{topic.dateOfUpload|date:"d/m/Y"}} <span
+                <li class="list-group-item mt-1 bg-info text-center text-light rounded"
+                    style="box-shadow: 0px 2px 3px rgb(150, 150, 150);">
+                    {{topic.topic_name|capfirst}}... {{topic.dateOfUpload|date:"d/m/Y"}} <span
                         class="badge badge-danger">coming
                         soon</span>
                 </li>
                 {% else %}
-                <li>
-                    {{topic.topic_name}}... {{topic.dateOfUpload|date:"d/m/Y"}} <a
-                        href="../login/?next=/paper/description/{{topic.id}}">click here</a>
+                <li class="list-group-item mt-1 bg-info text-center text-light rounded"
+                    style="box-shadow: 0px 2px 3px rgb(150, 150, 150);">
+                    <a href="../login/?next=/paper/description/{{topic.id}}">{{topic.topic_name|capfirst}}...
+                        {{topic.dateOfUpload|date:"d/m/Y"}} </a>
+                    <span class="badge badge-primary">Go to Exam</span>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if rest %}
+                <li class="list-group-item mt-1 bg-info text-center text-light rounded"
+                    style="box-shadow: 0px 2px 3px rgb(150, 150, 150);">
+                    <a href="../latest">see more...</a>
                 </li>
                 {% endif %}
             </ul>
-            {% endfor %}
+        </div>
+
+        <!-- subject -->
+        <div class="col-12 col-sm-6 card" style="max-height: 300px;">
+            <div class="card-title m-2">
+                <h5>
+                    Subjects :
+                </h5>
+            </div>
+
+            <ul class="list-group overflow-auto mb-2 s-list">
+                {% for s in sub %}
+                <li class="list-group-item mt-1 bg-info text-center text-light rounded"
+                    style="box-shadow: 0px 2px 3px rgb(150,150,150);">
+                    <a href="../subject/{{s.id}}">
+                        {{s.name|capfirst}}
+                    </a>
+                    <span class="badge">
+                        {{s.total_set}} sets
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- fb contact -->
+    <div class="shadow-sm card mt-2">
+        <div class="card-body">
+            <span class="font-weight-bold">
+                Note :
+            </span><br>
+            <span>
+                ** If anyone face any problem related to exam please contact me in facebook : <a
+                    href="https://www.facebook.com/sherlock.mondal" target="_blank">Click here</a>
+            </span><br>
         </div>
     </div>
+
 </div>
 {% endblock body %}

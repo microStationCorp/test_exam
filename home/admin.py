@@ -1,14 +1,22 @@
 from django.contrib import admin
-from .models import Topic, Questions, Marksheet, Objection, Reply
+from .models import Topic, Questions, Marksheet, Objection, Reply, Subject
 from django.contrib.admin.options import ModelAdmin
+from django.contrib.auth.models import User
 
 # Register your models here.
 
 
+@admin.register(Subject)
+class SubjectAdmin(ModelAdmin):
+    list_display = [
+        "name"
+    ]
+
+
+@admin.register(Objection)
 class ObjAdmin(ModelAdmin):
     list_display = [
-        "user_id",
-        "ques_id",
+        "username",
         "ques",
         "user_ans",
         "right_ans",
@@ -17,8 +25,12 @@ class ObjAdmin(ModelAdmin):
 
     def ques(self, obj):
         return Questions.objects.get(id=obj.ques_id).question
+    
+    def username(self,obj):
+        return User.objects.get(id=obj.user_id).username
 
 
+@admin.register(Reply)
 class ReplyAdmin(ModelAdmin):
     list_display = [
         "ques",
@@ -29,6 +41,7 @@ class ReplyAdmin(ModelAdmin):
         return Questions.objects.get(id=obj.ques_id).question
 
 
+@admin.register(Questions)
 class QuestionAdmin(ModelAdmin):
     list_display = [
         "topic",
@@ -37,6 +50,7 @@ class QuestionAdmin(ModelAdmin):
     ]
 
 
+@admin.register(Marksheet)
 class MarkAdmin(ModelAdmin):
     list_display = [
         "get_user",
@@ -51,20 +65,21 @@ class MarkAdmin(ModelAdmin):
     def get_user(self, obj):
         return obj.user.username
 
-    get_user.admin_order_field = 'user__username'
 
-
+@admin.register(Topic)
 class TopicAdmin(ModelAdmin):
     list_display = [
         "topic_name",
+        "get_subject",
         "tpq",
         "published",
         "tTime"
     ]
 
+    search_fields = ["subject__name"]
 
-admin.site.register(Topic, TopicAdmin)
-admin.site.register(Questions, QuestionAdmin)
-admin.site.register(Marksheet, MarkAdmin)
-admin.site.register(Objection, ObjAdmin)
-admin.site.register(Reply, ReplyAdmin)
+    def get_subject(self, obj):
+        if obj.subject is None:
+            return "no subject"
+        else:
+            return obj.subject.name

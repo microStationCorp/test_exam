@@ -31,13 +31,14 @@ def objection(request):
 def sendObj(request):
     if request.is_ajax() and request.method == "GET":
 
-        try:
-            Objection.objects.get(user_id=request.user.id,
-                                  ques_id=request.GET['ques_id'])
-        except:
+        if not Objection.objects.filter(user_id=request.user.id,
+                                        ques_id=request.GET['ques_id']).exists():
             obj = Objection(user_id=request.user.id,
                             ques_id=request.GET['ques_id'], user_ans=request.GET['u_ans'], right_ans=request.GET['r_ans'])
             obj.save()
-            r = Reply(ques_id=request.GET['ques_id'])
-            r.save()
+
+            if not Reply.objects.filter(ques_id=request.GET['ques_id']).exists():
+                r = Reply(ques_id=request.GET['ques_id'])
+                r.save()
+
         return JsonResponse({'data': 'done'})

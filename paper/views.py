@@ -8,7 +8,7 @@ from django.conf import settings
 def pDesc(request, topic_id):
     if not request.user.is_authenticated:
         return redirect("%s?next=%s" % (settings.LOGIN_URL, f"/paper/description/{topic_id}/"))
-    elif len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) == 0:
+    elif not Marksheet.objects.filter(user=request.user, topic_id=topic_id).exists():
         t = Topic.objects.get(id=topic_id)
         que = Questions.objects.filter(topic__id=topic_id)
 
@@ -32,7 +32,7 @@ def pDesc(request, topic_id):
 def qPaper(request, topic_id):
     if not request.user.is_authenticated:
         return redirect("%s?next=%s" % (settings.LOGIN_URL, request.path))
-    elif len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) != 0:
+    elif Marksheet.objects.filter(user=request.user, topic_id=topic_id).exists():
         return redirect("%s/timeline" % (settings.MAIN_URL))
     else:
         t = Topic.objects.get(id=topic_id)
@@ -44,7 +44,7 @@ def qPaper(request, topic_id):
 
 
 def pSubmit(request, topic_id):
-    if request.method == "POST" and len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) == 0:
+    if request.method == "POST" and not Marksheet.objects.filter(user=request.user, topic_id=topic_id).exists():
         answer_sheet = []
         right = 0
         notA = 0
@@ -105,7 +105,7 @@ def pSubmit(request, topic_id):
 def pResult(request, topic_id):
     if not request.user.is_authenticated:
         return redirect("%s?next=%s" % (settings.LOGIN_URL, f"/paper/paper_res/{topic_id}/"))
-    elif len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) == 0:
+    elif not Marksheet.objects.filter(user=request.user, topic_id=topic_id).exists():
         return redirect("%s/timeline" % (settings.MAIN_URL))
     else:
         ms = Marksheet.objects.get(user=request.user, topic_id=topic_id)

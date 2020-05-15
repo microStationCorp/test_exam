@@ -1,6 +1,6 @@
 {% extends 'home.html' %}
 
-{% block title %}latest exam{% endblock title %}
+{% block title %}subject{% endblock title %}
 
 {% block substyle %}
 <style>
@@ -8,7 +8,7 @@
         border: 2px solid rgb(2, 90, 39);
     }
 
-    .t_list a {
+    .t_list a{
         color: #243665;
         text-decoration: none;
     }
@@ -21,18 +21,19 @@
     <div class="card">
 
         <h3 class="card-header text-center">
-            Latest Exams
+            {{s_name|capfirst}}
         </h3>
 
     </div>
 
+    {% if has_set %}
     <div class="card mt-2 t_list">
         <div class="card-body" style="background-color: #8BD8BD; color: #243665; text-decoration: none;">
             <ul>
                 {% for d in data %}
                 {% if not d.topic.published %}
                 <li>
-                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <span
+                    {{d.topic.topic_name | capfirst}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <span
                         class="badge badge-danger">coming
                         soon</span>
                 </li>
@@ -57,6 +58,12 @@
             </ul>
         </div>
     </div>
-
+    {% else %}
+    <div class="card mt-2">
+        <div class="card-body text-center font-weight-bold" style="background-color: #8BD8BD; color: #243665;">
+            No Question set has been published yet on this subject
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock body %}
