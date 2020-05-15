@@ -35,6 +35,10 @@ home page
         text-decoration: none;
         cursor: pointer;
     }
+
+    .sub-badge {
+        background-color: teal;
+    }
 </style>
 {% endblock infoStyle %}
 
@@ -62,6 +66,7 @@ home page
                 {% if not topic.published %}
                 <li class="list-group-item mt-1 bg-info text-center text-light rounded"
                     style="box-shadow: 0px 2px 3px rgb(150, 150, 150);">
+                    <span class="badge sub-badge">{{topic.subject.name|capfirst}}</span>
                     {{topic.topic_name|capfirst}}... {{topic.dateOfUpload|date:"d/m/Y"}} <span
                         class="badge badge-danger">coming
                         soon</span>
@@ -69,7 +74,8 @@ home page
                 {% else %}
                 <li class="list-group-item mt-1 bg-info text-center text-light rounded"
                     style="box-shadow: 0px 2px 3px rgb(150, 150, 150);">
-                    <a href="../login/?next=/paper/description/{{topic.id}}">{{topic.topic_name|capfirst}}...
+                    <span class="badge sub-badge">{{topic.subject.name|capfirst}}</span><a
+                        href="../login/?next=/paper/description/{{topic.id}}">{{topic.topic_name|capfirst}}...
                         {{topic.dateOfUpload|date:"d/m/Y"}} </a>
                     <span class="badge badge-primary">Go to Exam</span>
                 </li>
