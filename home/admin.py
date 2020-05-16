@@ -25,8 +25,8 @@ class ObjAdmin(ModelAdmin):
 
     def ques(self, obj):
         return Questions.objects.get(id=obj.ques_id).question
-    
-    def username(self,obj):
+
+    def username(self, obj):
         return User.objects.get(id=obj.user_id).username
 
 
@@ -71,6 +71,7 @@ class TopicAdmin(ModelAdmin):
     list_display = [
         "topic_name",
         "get_subject",
+        "mark_sheets",
         "tpq",
         "published",
         "tTime"
@@ -83,3 +84,6 @@ class TopicAdmin(ModelAdmin):
             return "no subject"
         else:
             return obj.subject.name
+
+    def mark_sheets(self, obj):
+        return Marksheet.objects.filter(topic_id=obj.id).count()
