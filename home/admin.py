@@ -49,6 +49,10 @@ class QuestionAdmin(ModelAdmin):
         "answer"
     ]
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        kwargs["queryset"] = Topic.objects.filter(published=False)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 @admin.register(Marksheet)
 class MarkAdmin(ModelAdmin):
