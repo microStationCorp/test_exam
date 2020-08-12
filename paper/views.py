@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from home.models import Questions, Marksheet, Topic
+from home.models import Questions, Marksheet, Topic, Objection
 from django.conf import settings
 
 # Create your views here.
@@ -8,7 +8,7 @@ from django.conf import settings
 def pDesc(request, topic_id):
     if not request.user.is_authenticated:
         return redirect("%s?next=%s" % (settings.LOGIN_URL, f"/paper/description/{topic_id}/"))
-    elif len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) == 0:
+    elif not Marksheet.objects.filter(user=request.user, topic_id=topic_id).exists():
         t = Topic.objects.get(id=topic_id)
         que = Questions.objects.filter(topic__id=topic_id)
 
@@ -32,7 +32,7 @@ def pDesc(request, topic_id):
 def qPaper(request, topic_id):
     if not request.user.is_authenticated:
         return redirect("%s?next=%s" % (settings.LOGIN_URL, request.path))
-    elif len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) != 0:
+    elif Marksheet.objects.filter(user=request.user, topic_id=topic_id).exists():
         return redirect("%s/timeline" % (settings.MAIN_URL))
     else:
         t = Topic.objects.get(id=topic_id)
@@ -44,7 +44,7 @@ def qPaper(request, topic_id):
 
 
 def pSubmit(request, topic_id):
-    if request.method == "POST" and len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) == 0:
+    if request.method == "POST" and not Marksheet.objects.filter(user=request.user, topic_id=topic_id).exists():
         answer_sheet = []
         right = 0
         notA = 0
@@ -52,6 +52,7 @@ def pSubmit(request, topic_id):
         que = Questions.objects.filter(topic__id=topic_id)
         t = Topic.objects.get(id=topic_id)
         for i in range(len(que)):
+            obj = False
             if request.POST.get(str(que[i].id)) == que[i].answer:
                 res = True
                 right += 1
@@ -61,11 +62,15 @@ def pSubmit(request, topic_id):
             else:
                 wrong += 1
                 res = False
+                obj = True
+
             answer_sheet.append({
+                'q_id': que[i].id,
                 'ques': que[i].question,
                 'ans': que[i].answer,
                 'user': request.POST.get(str(que[i].id)),
                 'rem': res,
+                "obj": obj
             })
 
         result = {
@@ -89,6 +94,8 @@ def pSubmit(request, topic_id):
         total = len(Marksheet.objects.filter(topic_id=topic_id))
         rank = list(Marksheet.objects.filter(topic_id=topic_id).order_by(
             "-percentage").values_list('user__id', flat=True)).index(request.user.id)+1
+        # total = 100
+        # rank = 1
 
         return render(request, 'paper/markSheet.html', {'ans': answer_sheet, 'res': result, 'tname': t.topic_name, 'total': total, 'rank': rank})
     else:
@@ -98,7 +105,7 @@ def pSubmit(request, topic_id):
 def pResult(request, topic_id):
     if not request.user.is_authenticated:
         return redirect("%s?next=%s" % (settings.LOGIN_URL, f"/paper/paper_res/{topic_id}/"))
-    elif len(Marksheet.objects.filter(user=request.user, topic_id=topic_id)) == 0:
+    elif not Marksheet.objects.filter(user=request.user, topic_id=topic_id).exists():
         return redirect("%s/timeline" % (settings.MAIN_URL))
     else:
         ms = Marksheet.objects.get(user=request.user, topic_id=topic_id)

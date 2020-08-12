@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from home.models import Topic, Marksheet
+from home.models import Topic, Marksheet, Subject
+from django.db.models import Count
 # Create your views here.
 
 
@@ -9,7 +10,7 @@ def timeline(response):
     topics = Topic.objects.all().order_by('-dateOfUpload')[:5]
     data = []
     for t in topics:
-        if len(Marksheet.objects.filter(user=response.user, topic_id=t.id)) == 0:
+        if not Marksheet.objects.filter(user=response.user, topic_id=t.id).exists():
             data.append({
                 'topic': t,
                 'done': False,
@@ -25,4 +26,6 @@ def timeline(response):
     else:
         latest = False
 
-    return render(response, 'timeline/timeline.html', {'data': data, 'latest': latest})
+    s = Subject.objects.annotate(total_set=Count('topic'))
+
+    return render(response, 'timeline/timeline.html', {'data': data, 'latest': latest, 'sub': s})

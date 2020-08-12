@@ -1,0 +1,85 @@
+{% extends 'home.html' %}
+
+{% block title %}objections{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <div class="card text-center">
+        <h4>
+            {{user.username|capfirst}}
+        </h4>
+        <span>
+            <a href="../timeline">
+                Timeline
+            </a>
+        </span>
+        <span>
+            <a href="../logout">
+                log out
+            </a>
+        </span>
+    </div>
+
+    <div class="card mt-2">
+
+        {% for d in data %}
+
+        <div class="card-header">
+            <a class="btn btn-link" data-id="d{{d.ques_id}}" data-toggle="collapse" href="#q{{d.ques_id}}"> question -
+                "{{d.ques}}"</a>
+            {% if d.reply is None %}
+            <span class="badge badge-pill badge-secondary">pending</span>
+            {% endif %}
+        </div>
+
+
+        {% if d.reply is None %}
+        <div data-name="collapsable" data-id="d{{d.ques_id}}" id="q{{d.ques_id}}" class="collapse">
+            <div class="card-body" style="background-color: rgb(250, 174, 164);">
+                objection is recieved. please wait for the reply.
+            </div>
+        </div>
+        {% else %}
+        <div data-name="collapsable" data-id="d{{d.ques_id}}" id="q{{d.ques_id}}" class="collapse">
+            <div class="card-body" style="background-color: rgb(135, 253, 184);">
+                {{d.reply}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% empty %}
+
+        <div class="card">
+            <div class="card-header text-center">
+                There is no objections
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock body %}
+
+{% block objjs %}
+<script>
+    $(document).ready(function () {
+        var did;
+
+        $("[data-toggle=collapse]").on("click", function () {
+            did = $(this).attr("data-id");
+
+            if ($("[data-id=" + did + "]").hasClass("show") == false) {
+                $("[data-name=collapsable]").each(function (event) {
+                    if ($(this).hasClass("show")) {
+                        $(this).removeClass("show");
+                    }
+                })
+            }
+        })
+
+
+    });
+</script>
+
+{% endblock objjs %}

@@ -25,6 +25,10 @@
             left: 10px;
             display: inline;
         }
+
+        .badge-primary {
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -76,9 +80,16 @@
         <ol>
             {% for r in ans %}
             <li>
-                <span class="font-weight-bold">{{r.ques}}</span> <br>
-                <span>right answer : {{r.ans}}</span><br>
-                <span>user given : {{r.user}}</span><br>
+                <span class="font-weight-bold">{{r.ques}}</span>
+
+                {% if r.obj %}
+                <span data-id="{{r.q_id}}" class="badge badge-primary text-wrap">raise objection</span><br>
+                {% else %}
+                <br>
+                {% endif %}
+
+                <span data-rans="{{r.ans}}">right answer : {{r.ans}}</span><br>
+                <span data-uans="{{r.user}}">user given : {{r.user}}</span><br>
                 {% if r.rem %}
                 <span class="text-success font-weight-bold">remark : Right </span>
                 {% elif r.rem is None %}
@@ -98,18 +109,55 @@
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script> -->
-    <script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery.3.5.1.js' %}"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+
+            $(".badge-primary").on("click", function () {
+                $(this).text('objection send');
+                // $(this).removeClass("badge-primary");
+                // $(this).addClass("badge-secondary");
+                var q_id = $(this).attr("data-id");
+                console.log(q_id);
+                $badge = $(this);
+
+                // $("li>span").each(function () {
+
+                // })
+
+                user_ans = $(this).siblings("span[data-uans]").attr("data-uans");
+                right_ans = $(this).siblings("span[data-rans]").attr("data-rans");
+
+                $.ajax({
+                    url: location.origin + "/objections/send",
+                    type: 'GET',
+                    data: {
+                        'ques_id': q_id,
+                        'u_ans': user_ans,
+                        'r_ans': right_ans,
+                    }, success: function (data) {
+                        $badge.removeClass("badge-primary");
+                        $badge.addClass("badge-secondary");
+                    }, error: function (error) {
+                        console.log('err', error);
+                    }
+
+                })
+            });
+
+        });
+    </script>
 </body>
 
 </html>

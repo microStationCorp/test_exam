@@ -8,63 +8,130 @@
         color: red;
         font-size: .7rem;
     }
+
+    .l-exam-list {
+        font-size: .9rem;
+    }
+
+    .l-exam-list a {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .s-list {
+        font-size: .9rem;
+    }
+
+    .s-list .badge {
+        background-color: rgb(240, 57, 133);
+        border-radius: 5px;
+    }
+
+    .s-list a {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .sub-badge {
+        background-color: teal;
+    }
 </style>
 {% endblock infoStyle %}
 
 {% block body %}
 <div class="container">
-    <div class="card text-center">
+
+    <!-- navigation -->
+    <div class="shadow-sm card text-center">
         <h4>
             {{user.username|capfirst}}
         </h4>
-        <span>
-            <a href="../myprofile">
-                my profile
-            </a>
-        </span>
-        <span>
-            <a href="../logout">
-                log out
-            </a>
-        </span>
-    </div>
-    <div class="card mt-2">
-        <div class="card-title m-2">
-            <h5>
-                Latest Exams : <span class="info-text font-weight-light">* question papers are uploaded everyday after
-                    6pm.</span>
-            </h5>
-        </div>
-        <div>
-            {% for d in data %}
-            <ul>
-                {% if not d.topic.published %}
-                <li>
-                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <span
-                        class="badge badge-danger">coming
-                        soon</span>
-                </li>
-                {% elif d.done %}
-                <li>
-                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <a
-                        href="../paper/paper_res/{{d.topic.id}}">result</a>
-                </li>
-                {% else %}
-                <li>
-                    {{d.topic.topic_name}}... {{d.topic.dateOfUpload|date:"d/m/Y"}} <a
-                        href="../paper/description/{{d.topic.id}}">click here</a>
-                </li>
-                {% endif %}
-            </ul>
-            {% endfor %}
-            <div class="card-title ml-4">
-                {% if latest %}
-                <a href="../latest">see more...</a>
-                {% endif %}
+        <div class="row my-2">
+            <div class="col">
+                <a href="../myprofile">My profile</a>
+            </div>
+            <div class="col">
+                <a href="../objections">Objections</a>
+            </div>
+            <div class="col">
+                <a href="../logout">log out</a>
             </div>
         </div>
     </div>
-    <div class="card mt-2">
+
+
+    <div class="row mx-auto justify-content-between mt-2">
+
+        <!-- latest exam set -->
+        <div class="col-12 col-sm-6 card" style="max-height: 300px;">
+            <div class="card-title m-2">
+                <h5>
+                    Latest Exams : <span class="info-text font-weight-light">* question papers are uploaded everyday
+                        after
+                        6pm.</span>
+                </h5>
+            </div>
+            <ul class="l-exam-list overflow-auto mb-2 list-group">
+                {% for d in data %}
+                {% if not d.topic.published %}
+                <li class="list-group-item mt-1 bg-info text-center text-light rounded"
+                    style="box-shadow: 0px 2px 3px rgb(150, 150, 150);">
+                    <span class="badge sub-badge">{{d.topic.subject.name|capfirst}}</span> {{d.topic.topic_name | capfirst}}... {{d.topic.dateOfUpload|date:"d/m/Y"}}
+                    <span class="badge badge-danger">coming soon</span>
+                </li>
+                {% elif d.done %}
+                <li class="list-group-item mt-1 bg-info text-center text-light rounded"
+                    style="box-shadow: 0px 2px 3px rgb(150, 150, 150);">
+                    <span class="badge sub-badge">{{d.topic.subject.name|capfirst}}</span> <a href="../paper/paper_res/{{d.topic.id}}">{{d.topic.topic_name | capfirst}}...
+                        {{d.topic.dateOfUpload|date:"d/m/Y"}}</a> <span class="badge badge-success">result</span>
+                </li>
+                {% else %}
+                <li class="list-group-item mt-1 bg-info text-center text-light rounded"
+                    style="box-shadow: 0px 2px 3px rgb(150, 150, 150);">
+                    <span class="badge sub-badge">{{d.topic.subject.name|capfirst}}</span> <a href="../paper/description/{{d.topic.id}}">{{d.topic.topic_name | capfirst}}...
+                        {{d.topic.dateOfUpload|date:"d/m/Y"}}</a> <span class="badge badge-primary">Go to Exam</span>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if latest %}
+                <li class="list-group-item mt-1 bg-info text-center text-light rounded"
+                    style="box-shadow: 0px 2px 3px rgb(150, 150, 150);">
+                    <a href="../latest">see more...</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <!-- subject choice area -->
+        <div class="col-12 col-sm-6 card" style="max-height: 300px;">
+
+            <div class="card-title m-2">
+                <h5>
+                    Subjects :
+                </h5>
+            </div>
+
+            <ul class="list-group s-list overflow-auto mb-2">
+                {% for s in sub %}
+                <li class="list-group-item mt-1 bg-info text-center text-light rounded"
+                    style="box-shadow: 0px 2px 3px rgb(150, 150, 150);">
+                    <a href="../subject/{{s.id}}">
+                        {{s.name|capfirst}}
+                    </a>
+                    <span class="badge">
+                        {{s.total_set}} sets
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- fb contact -->
+    <div class="shadow-sm card mt-2">
         <div class="card-body">
             <span class="font-weight-bold">
                 Note :
@@ -75,5 +142,7 @@
             </span><br>
         </div>
     </div>
+
+
 </div>
 {% endblock body %}

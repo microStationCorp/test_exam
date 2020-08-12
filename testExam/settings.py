@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'timeline.apps.TimelineConfig',
     'paper.apps.PaperConfig',
     'myProfile.apps.MyprofileConfig',
-    'lExam.apps.LexamConfig'
+    'lExam.apps.LexamConfig',
+    'objections.apps.ObjectionsConfig',
+    'subject.apps.SubjectConfig'
 ]
 
 MIDDLEWARE = [
